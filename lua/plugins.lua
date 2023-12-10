@@ -6,7 +6,7 @@ require 'zorx.remap'
 require 'zorx.color'
 require 'telescope'
 require 'tree'
-
+require 'indentlines'
 
 return require('packer').startup(function(use)
   -- Packer can manage itself
@@ -56,6 +56,8 @@ return require('packer').startup(function(use)
   }
 
   use("theprimeagen/harpoon")
+  use("lukas-reineke/indent-blankline.nvim")
+  use("preservim/nerdcommenter")
 
 end)
 
