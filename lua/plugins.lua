@@ -8,6 +8,7 @@ require 'telescope'
 require 'tree'
 require 'indentlines'
 require 'statusline'
+require 'fugitive'
 
 return require('packer').startup(function(use)
   -- Packer can manage itself
@@ -56,7 +57,6 @@ return require('packer').startup(function(use)
     opts = {},
   }
 
-  use("theprimeagen/harpoon")
   use("lukas-reineke/indent-blankline.nvim")
   use("preservim/nerdcommenter")
 
@@ -64,9 +64,11 @@ return require('packer').startup(function(use)
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
   use {
-  'nvim-lualine/lualine.nvim',
-  requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-}
+    'nvim-lualine/lualine.nvim',
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+  }
+
+  use('tpope/vim-fugitive')
 
 end)
 
