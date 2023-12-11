@@ -7,6 +7,7 @@ require 'zorx.color'
 require 'telescope'
 require 'tree'
 require 'indentlines'
+require 'statusline'
 
 return require('packer').startup(function(use)
   -- Packer can manage itself
@@ -58,6 +59,14 @@ return require('packer').startup(function(use)
   use("theprimeagen/harpoon")
   use("lukas-reineke/indent-blankline.nvim")
   use("preservim/nerdcommenter")
+
+  -- Post-install/update hook with neovim command
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+
+  use {
+  'nvim-lualine/lualine.nvim',
+  requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+}
 
 end)
 
