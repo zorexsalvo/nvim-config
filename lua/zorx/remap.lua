@@ -1,6 +1,17 @@
-local tree = require "nvim-tree.api"
-
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", ":q<CR>")
-vim.keymap.set("n", "?", tree.tree.toggle_help)
-vim.keymap.set("n", "<C-h>", ":NvimTreeToggle<cr>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>fb",
+  ":Telescope file_browser<CR>",
+  { noremap = true }
+)
+
+-- open file_browser with the path of the current buffer
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>fb",
+  ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+  { noremap = true }
+)

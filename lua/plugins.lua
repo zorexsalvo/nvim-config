@@ -1,14 +1,5 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 --
---
-
-require 'zorx.remap'
-require 'zorx.color'
-require 'telescope'
-require 'tree'
-require 'indentlines'
-require 'statusline'
-require 'fugitive'
 
 return require('packer').startup(function(use)
   -- Packer can manage itself
@@ -38,16 +29,17 @@ return require('packer').startup(function(use)
 
   -- Experiments
   use {
-   'nvim-tree/nvim-tree.lua',
-    requires = {
-    	'nvim-tree/nvim-web-devicons',
+    'nvim-telescope/telescope.nvim', tag = '0.1.5',
+    -- or                            , branch = '0.1.x',
+    requires = { {'nvim-lua/plenary.nvim'} },
+    extensions = {
+      file_browser = { }
     }
   }
 
   use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.5',
-     -- or                            , branch = '0.1.x',
-     requires = { {'nvim-lua/plenary.nvim'} }
+    "nvim-telescope/telescope-file-browser.nvim",
+    requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" }
   }
 
   use {
@@ -69,6 +61,41 @@ return require('packer').startup(function(use)
   }
 
   use('tpope/vim-fugitive')
+
+  use('lewis6991/gitsigns.nvim')
+
+  use{
+      'ThePrimeagen/harpoon',
+      requires = {'nvim-lua/plenary.nvim'}
+  }
+
+  use({
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
+  })
+
+  use({
+      "folke/zen-mode.nvim",
+      opts = {
+          -- your configuration comes here
+          -- or leave it empty to use the default settings
+          -- refer to the configuration section below
+      }
+  })
+
+  require 'zorx.remap'
+  require 'zorx.color'
+  require 'indentlines'
+  require 'statusline'
+  require 'fugitive'
+  require 'gits'
+  require 'prime'
+  require 'tele'
 
 end)
 
