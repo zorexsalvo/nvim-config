@@ -7,6 +7,7 @@ set lcs+=space:.
 set expandtab
 set tabstop=4
 set shiftwidth=4
+set clipboard=unnamedplus
 
 "Set spaces to 2 for lua, html files
 autocmd Filetype lua setlocal ts=2 sw=2 expandtab
