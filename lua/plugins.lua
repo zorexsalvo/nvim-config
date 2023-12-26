@@ -105,6 +105,8 @@ return require('packer').startup(function(use)
     }
   }
 
+  use('github/copilot.vim')
+
   require 'zorx.remap'
   require 'zorx.color'
   require 'indentlines'
