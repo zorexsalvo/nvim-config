@@ -117,5 +117,7 @@ return require('packer').startup(function(use)
   require 'tele'
   require 'lspzero'
 
-end)
 
+  vim.wo.relativenumber = true
+
+end)

@@ -15,3 +15,5 @@ set foldmethod=indent
 autocmd Filetype lua setlocal ts=2 sw=2 expandtab
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
 autocmd Filetype htmldjango setlocal ts=2 sw=2 expandtab
+autocmd Filetype yaml setlocal ts=2 sw=2 expandtab
+autocmd Filetype yml setlocal ts=2 sw=2 expandtab
