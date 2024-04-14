@@ -10,7 +10,7 @@ require("mason").setup()
 require("mason-lspconfig").setup()
 
 -- After setting up mason-lspconfig you may set up servers via lspconfig
--- require("lspconfig").pyright.setup {}
+require("lspconfig").pyright.setup {}
 -- require("lspconfig").rust_analyzer.setup {}
 --
  require("lspconfig").ruff_lsp.setup {
