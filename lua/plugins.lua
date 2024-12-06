@@ -105,7 +105,13 @@ return require('packer').startup(function(use)
     }
   }
 
-  use('github/copilot.vim')
+  use {
+        "lukas-reineke/headlines.nvim",
+        after = "nvim-treesitter",
+        config = function()
+            require("headlines").setup()
+        end,
+    }
 
   require 'zorx.remap'
   require 'zorx.color'
@@ -116,7 +122,6 @@ return require('packer').startup(function(use)
   require 'prime'
   require 'tele'
   require 'lspzero'
-
 
   vim.wo.relativenumber = true
 

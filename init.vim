@@ -10,6 +10,7 @@ set shiftwidth=4
 set clipboard=unnamedplus
 set foldenable
 set foldmethod=indent
+set colorcolumn=80
 
 "Set spaces to 2 for lua, html files
 autocmd Filetype lua setlocal ts=2 sw=2 expandtab
