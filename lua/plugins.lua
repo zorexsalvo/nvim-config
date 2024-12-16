@@ -26,6 +26,7 @@ return require('packer').startup(function(use)
 
   -- You can alias plugin names
   use {'dracula/vim', as = 'dracula'}
+  use {'rebelot/kanagawa.nvim', as = 'kanagawa'}
 
   -- Experiments
   use {
@@ -111,7 +112,7 @@ return require('packer').startup(function(use)
         config = function()
             require("headlines").setup()
         end,
-    }
+  }
 
   require 'zorx.remap'
   require 'zorx.color'
