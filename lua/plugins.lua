@@ -96,6 +96,8 @@ return require('packer').startup(function(use)
         end,
   }
 
+  use 'folke/which-key.nvim'
+
   require 'zorx.remap'
   require 'zorx.color'
   require 'indentlines'
