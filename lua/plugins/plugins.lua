@@ -1,12 +1,10 @@
 return {
-   { 'rstacruz/vim-closer' },
-
   -- Lazy loading:
   -- Load on specific commands
   { 'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}},
 
   -- Load on an autocommand event
-  { 'andymass/vim-matchup', event = 'VimEnter', lazy = true },
+  { 'andymass/vim-matchup', event = 'VimEnter' },
 
   -- Load on a combination of conditions: specific filetypes or commands
   -- Also run code after load (see the "config" key)
@@ -17,24 +15,24 @@ return {
     config = 'vim.cmd[[ALEEnable]]'
   },
 
-  { "preservim/nerdcommenter", lazy = True },
+  { "preservim/nerdcommenter" },
 
   -- Post-install/update hook with neovim command
-  { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', lazy = True },
+  { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
 
-  { 'lewis6991/gitsigns.nvim', lazy = True },
+  { 'lewis6991/gitsigns.nvim' },
 
   {
-      "folke/zen-mode.nvim",
-      opts = { },
+    "folke/zen-mode.nvim",
+    opts = { },
   },
 
   {
-        "lukas-reineke/headlines.nvim",
-        after = "nvim-treesitter",
-        config = function()
-            require("headlines").setup()
-        end,
+    "lukas-reineke/headlines.nvim",
+    after = "nvim-treesitter",
+    config = function()
+      require("headlines").setup()
+    end,
   },
 
   { 'folke/which-key.nvim' },
@@ -52,5 +50,5 @@ return {
   { "nvim-tree/nvim-web-devicons", lazy = true },
 
   { "neovim/nvim-lspconfig" },
-}
 
+}

@@ -1,5 +1,6 @@
 require("config.lazy")
 require("config.lsp")
+require("config.ruff")
 
 -- basic options
 vim.opt.number = true

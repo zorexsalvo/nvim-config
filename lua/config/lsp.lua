@@ -8,14 +8,35 @@ cmp.setup ({
 -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-require('lspconfig').lua_ls.setup {
+vim.lsp.config('lua_ls', {
   capabilities = capabilities,
-}
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = {'vim'}, -- Recognize 'vim' as a global variable
+      },
+      workspace = {
+        checkThirdParty = false, -- Disable third-party checks
+      },
+    },
+  },
+})
 
 require('lspconfig').pyright.setup {
   capabilities = capabilities,
+  settings = {
+    pyright = {
+      -- Using Ruff's import organizer
+      disableOrganizeImports = true,
+    },
+    python = {
+      analysis = {
+        -- Ignore all files for analysis to exclusively use Ruff for linting
+        ignore = { '*' },
+      },
+    },
+  },
 }
-
 
 -- Reserve a space in the gutter
 vim.opt.signcolumn = 'yes'
