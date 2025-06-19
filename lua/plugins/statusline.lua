@@ -1,7 +1,8 @@
-require('lualine').setup {
-  options = {
+return {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true },
+    options = {
     icons_enabled = true,
-    theme = 'tokyonight',
     component_separators = {'', ''},
     section_separators = {'', ''},
     disabled_filetypes = {}
