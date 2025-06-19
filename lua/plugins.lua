@@ -104,6 +104,7 @@ return require('packer').startup(function(use)
   require 'gits'
   require 'prime'
   require 'tele'
+  require 'lsp'
 
   vim.wo.relativenumber = true
   vim.filetype.add {
