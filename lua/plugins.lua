@@ -70,8 +70,7 @@ return require('packer').startup(function(use)
   }
 
   use({
-    "kylechui/nvim-surround",
-    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+
     config = function()
       require("nvim-surround").setup({
         -- Configuration here, or leave empty to use defaults
@@ -104,17 +103,10 @@ return require('packer').startup(function(use)
   require 'statusline'
   require 'fugitive'
   require 'gits'
-  require 'prime'
-  require 'tele'
+  require 'harpooon'
+  require 'scope'
   require 'lsp'
 
   vim.wo.relativenumber = true
-  vim.filetype.add {
-    extension = {
-      jinja = 'jinja',
-      jinja2 = 'jinja',
-      j2 = 'jinja',
-    },
-  }
 
 end)
