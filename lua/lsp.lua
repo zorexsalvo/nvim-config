@@ -1,7 +1,21 @@
-vim.lsp.config('pyright', {
+local cmp = require('cmp')
+cmp.setup ({
+  sources = {
+    { name = 'nvim_lsp' }
+  },
 })
 
-vim.lsp.enable('pyright');
+-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+require('lspconfig').lua_ls.setup {
+  capabilities = capabilities,
+}
+
+require('lspconfig').pyright.setup {
+  capabilities = capabilities,
+}
+
 
 -- Reserve a space in the gutter
 vim.opt.signcolumn = 'yes'
@@ -23,3 +37,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+vim.keymap.set('n', 'gK', function()
+  local new_config = not vim.diagnostic.config().virtual_lines
+  vim.diagnostic.config({ virtual_lines = new_config })
+end, { desc = 'Toggle diagnostic virtual_lines' })
