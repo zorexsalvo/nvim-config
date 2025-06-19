@@ -70,7 +70,8 @@ return require('packer').startup(function(use)
   }
 
   use({
-
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
     config = function()
       require("nvim-surround").setup({
         -- Configuration here, or leave empty to use defaults
@@ -96,6 +97,12 @@ return require('packer').startup(function(use)
   }
 
   use 'folke/which-key.nvim'
+
+  use 'hrsh7th/nvim-cmp'         -- Completion plugin
+  use 'hrsh7th/cmp-nvim-lsp'     -- LSP source
+  use 'hrsh7th/cmp-buffer'       -- Buffer source
+  use 'hrsh7th/cmp-path'         -- Path source
+  use 'hrsh7th/cmp-cmdline'      -- Cmdline source
 
   require 'zorx.remap'
   require 'zorx.color'
