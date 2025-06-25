@@ -27,14 +27,6 @@ return {
     opts = { },
   },
 
-  {
-    "lukas-reineke/headlines.nvim",
-    after = "nvim-treesitter",
-    config = function()
-      require("headlines").setup()
-    end,
-  },
-
   { 'folke/which-key.nvim' },
 
   {
@@ -51,4 +43,32 @@ return {
 
   { "neovim/nvim-lspconfig" },
 
+  {
+    "L3MON4D3/LuaSnip",
+    dependencies = { "rafamadriz/friendly-snippets" },
+    config = function()
+      local ls = require("luasnip")
+
+      vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
+      vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
+      vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
+
+      vim.keymap.set({"i", "s"}, "<C-E>", function()
+        if ls.choice_active() then
+          ls.change_choice(1)
+        end
+      end, {silent = true})
+    end
+  },
+
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({})
+    end,
+  }
 }
