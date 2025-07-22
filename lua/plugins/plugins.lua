@@ -20,14 +20,12 @@ return {
   -- Post-install/update hook with neovim command
   { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
 
-  { 'lewis6991/gitsigns.nvim' },
+  --{ 'lewis6991/gitsigns.nvim' },
 
   {
     "folke/zen-mode.nvim",
     opts = { },
   },
-
-  { 'folke/which-key.nvim' },
 
   {
     "kylechui/nvim-surround",
@@ -62,13 +60,4 @@ return {
   },
 
   { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
-
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({})
-    end,
-  }
 }

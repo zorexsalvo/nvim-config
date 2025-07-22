@@ -14,7 +14,16 @@ return {
       local builtin = require('telescope.builtin')
       vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = "Telescope Find Files" })
       vim.keymap.set('n', '<leader>pg', builtin.git_files, { desc = "Telescope Git Files" })
-      vim.keymap.set('n', '<leader>pl', builtin.live_grep, { desc = "Telescope Live Grep" })
+      vim.keymap.set('n', '<leader>pl',
+        function()
+          builtin.live_grep({
+            additional_args = function()
+              return { '--fixed-strings' }
+            end
+          })
+        end,
+        { desc = "Telescope Live Grep" }
+      )
       vim.keymap.set('n', '<leader>ps', builtin.grep_string, { desc = "Telescope Grep String" })
       vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Default vim file browser"} )
       vim.api.nvim_set_keymap(
