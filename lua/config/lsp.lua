@@ -46,6 +46,14 @@ require('lspconfig').pyright.setup {
   },
 }
 
+require('lspconfig').ruff.setup({
+  init_options = {
+    settings = {
+      args = {},
+    }
+  }
+})
+
 -- Reserve a space in the gutter
 vim.opt.signcolumn = 'yes'
 
@@ -63,10 +71,37 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
     vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
     vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-  end,
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    
+    -- Format selection in visual mode
+    vim.keymap.set('v', '<leader>f', function()
+        vim.lsp.buf.format({
+          async = true,
+          range = {
+            ["start"] = vim.api.nvim_buf_get_mark(0, "<"),
+            ["end"] = vim.api.nvim_buf_get_mark(0, ">"),
+          }
+        })
+      end, opts
+    )
+    
+  end
 })
 
 vim.keymap.set('n', 'gK', function()
   local new_config = not vim.diagnostic.config().virtual_lines
   vim.diagnostic.config({ virtual_lines = new_config })
 end, { desc = 'Toggle diagnostic virtual_lines' })
+
+
+--Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+vim.lsp.config('html', {
+  capabilities = capabilities,
+})
+
+vim.lsp.enable('html')

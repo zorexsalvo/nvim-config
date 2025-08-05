@@ -20,7 +20,7 @@ return {
   -- Post-install/update hook with neovim command
   { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
 
-  --{ 'lewis6991/gitsigns.nvim' },
+  { 'lewis6991/gitsigns.nvim' },
 
   {
     "folke/zen-mode.nvim",

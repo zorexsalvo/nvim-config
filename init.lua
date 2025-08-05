@@ -11,7 +11,7 @@ vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.clipboard = "unnamedplus"
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "88"
 
 -- filetype-specific settings
 vim.api.nvim_create_autocmd("FileType", {
@@ -24,3 +24,10 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.wo.relativenumber = true
+
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = {"*/templates/*.html"},
+  callback = function()
+    vim.bo.filetype = "html"
+  end,
+})

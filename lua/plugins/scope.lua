@@ -12,9 +12,10 @@ return {
     requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
     config = function()
       local builtin = require('telescope.builtin')
-      vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = "Telescope Find Files" })
-      vim.keymap.set('n', '<leader>pg', builtin.git_files, { desc = "Telescope Git Files" })
-      vim.keymap.set('n', '<leader>pl',
+      vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "Telescope Find Files" })
+      vim.keymap.set('n', '<leader>fg', builtin.git_files, { desc = "Telescope Git Files" })
+    vim.keymap.set('n', '<leader>fn', builtin.buffers, { desc = 'Telescope buffers' })
+      vim.keymap.set('n', '<leader>fl',
         function()
           builtin.live_grep({
             additional_args = function()
@@ -37,7 +38,6 @@ return {
         "n",
         "<space>fb",
         ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
-
         { noremap = true }
       )
     end,
