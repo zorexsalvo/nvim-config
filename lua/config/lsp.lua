@@ -28,7 +28,7 @@ vim.lsp.config('lua_ls', {
   },
 })
 
-require('lspconfig').pyright.setup {
+vim.lsp.config("pyright", {
   capabilities = capabilities,
   settings = {
     pyright = {
@@ -44,9 +44,9 @@ require('lspconfig').pyright.setup {
       },
     },
   },
-}
+})
 
-require('lspconfig').ruff.setup({
+vim.lsp.config("ruff", {
   init_options = {
     settings = {
       args = {},
