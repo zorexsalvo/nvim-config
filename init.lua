@@ -24,10 +24,3 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.wo.relativenumber = true
-
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-  pattern = {"*/templates/*.html"},
-  callback = function()
-    vim.bo.filetype = "html"
-  end,
-})

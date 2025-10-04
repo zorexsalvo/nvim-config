@@ -1,4 +1,3 @@
-vim.lsp.config('ruff', {})
 vim.lsp.enable('ruff')
 
 vim.api.nvim_create_autocmd("LspAttach", {
