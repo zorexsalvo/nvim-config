@@ -58,6 +58,4 @@ return {
       end, {silent = true})
     end
   },
-
-  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 }
