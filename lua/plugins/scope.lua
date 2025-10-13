@@ -6,7 +6,7 @@ return {
       file_browser = { }
     },
     opts = {
-      defaults = require('telescope.themes').get_dropdown(),
+      --defaults = require('telescope.themes').get_dropdown(),
     },
   },
 
