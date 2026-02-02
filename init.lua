@@ -24,3 +24,12 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.wo.relativenumber = true
+
+require('catppuccin').setup({
+    transparent_background = true, 
+    float = {
+        transparent = true,
+        solid = false, -- usually set to false for full transparency
+    },
+})
+vim.cmd.colorscheme "catppuccin-frappe"

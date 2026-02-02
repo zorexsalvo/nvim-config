@@ -1,18 +1,20 @@
 local cmp = require('cmp')
-cmp.setup ({
+cmp.setup({
   sources = {
     { name = "copilot", group_index = 2 },
     { name = 'nvim_lsp', group_index = 2 },
   },
-  mapping = {
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),         -- Accept selected item
-    ['<Tab>'] = cmp.mapping.select_next_item(),                -- Next item
-    ['<S-Tab>'] = cmp.mapping.select_prev_item(),              -- Previous item
-  },
+  mapping = cmp.mapping.preset.insert({
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
+    ['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+  }),
 })
 
--- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 vim.lsp.config('lua_ls', {
   capabilities = capabilities,
@@ -47,6 +49,7 @@ vim.lsp.config("pyright", {
 })
 
 vim.lsp.config("ruff", {
+  capabilities = capabilities,
   init_options = {
     settings = {
       args = {},
@@ -54,56 +57,72 @@ vim.lsp.config("ruff", {
   }
 })
 
--- Reserve a space in the gutter
 vim.opt.signcolumn = 'yes'
 
--- This is where you enable features that only work
--- if there is a language server active in the file
+local function safe_lsp_jump(method)
+  return function()
+    local params = vim.lsp.util.make_position_params()
+    vim.lsp.buf_request(0, method, params, function(err, result, ctx, config)
+      if err then
+        vim.notify("LSP error: " .. tostring(err.message), vim.log.levels.ERROR)
+        return
+      end
+      if not result or vim.tbl_isempty(result) then
+        vim.notify("No locations found", vim.log.levels.INFO)
+        return
+      end
+      
+      local handler = vim.lsp.handlers[method]
+      if handler then
+        handler(err, result, ctx, config)
+      else
+        -- Fallback to default jump-to-location behavior
+        if vim.islist(result) then
+          vim.lsp.util.jump_to_location(result[1], 'utf-8')
+        else
+          vim.lsp.util.jump_to_location(result, 'utf-8')
+        end
+      end
+    end)
+  end
+end
+
 vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'LSP actions',
   callback = function(event)
-    local opts = {buffer = event.buf}
+    local opts = { buffer = event.buf }
+    local buf = vim.lsp.buf
 
-    vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-    vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-    vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-    vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-    vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-    vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-    vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    
-    -- Format selection in visual mode
-    vim.keymap.set('v', '<leader>f', function()
-        vim.lsp.buf.format({
-          async = true,
-          range = {
-            ["start"] = vim.api.nvim_buf_get_mark(0, "<"),
-            ["end"] = vim.api.nvim_buf_get_mark(0, ">"),
-          }
-        })
-      end, opts
-    )
-    
+    vim.keymap.set('n', 'K', buf.hover, opts)
+    vim.keymap.set('n', 'gd', safe_lsp_jump('textDocument/definition'), opts)
+    vim.keymap.set('n', 'gD', safe_lsp_jump('textDocument/declaration'), opts)
+    vim.keymap.set('n', 'gi', safe_lsp_jump('textDocument/implementation'), opts)
+    vim.keymap.set('n', 'go', safe_lsp_jump('textDocument/typeDefinition'), opts)
+    vim.keymap.set('n', 'gr', buf.references, opts)
+    vim.keymap.set('n', 'gs', buf.signature_help, opts)
+    vim.keymap.set('n', '<leader>rn', buf.rename, opts)
+    vim.keymap.set('n', '<leader>ca', buf.code_action, opts)
+    vim.keymap.set({ 'n', 'v' }, '<leader>f', function()
+      buf.format({ async = true })
+    end, opts)
   end
 })
 
 vim.keymap.set('n', 'gK', function()
-  local new_config = not vim.diagnostic.config().virtual_lines
-  vim.diagnostic.config({ virtual_lines = new_config })
+  vim.diagnostic.config({ virtual_lines = not vim.diagnostic.config().virtual_lines })
 end, { desc = 'Toggle diagnostic virtual_lines' })
 
+vim.keymap.set('n', '<leader>dq', function()
+  vim.diagnostic.setqflist({ open = true })
+end, { desc = 'Show all diagnostics in quickfix' })
 
---Enable (broadcasting) snippet capability for completion
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+vim.keymap.set('n', '<leader>dl', function()
+  vim.diagnostic.setloclist({ open = true })
+end, { desc = 'Show diagnostics in loclist' })
 
-vim.lsp.config('html', {
-  capabilities = capabilities,
-})
+vim.lsp.config('html', { capabilities = capabilities })
+vim.lsp.config('ts_ls', { capabilities = capabilities })
+vim.lsp.config('emmet_ls', { capabilities = capabilities })
+vim.lsp.config('cssls', { capabilities = capabilities })
 
-vim.lsp.enable('html')
-vim.lsp.enable('pyright')
-vim.lsp.enable('ts_ls')
+vim.lsp.enable({ 'html', 'ts_ls', 'pyright', 'ruff', 'emmet_ls', 'cssls', 'lua_ls' })
