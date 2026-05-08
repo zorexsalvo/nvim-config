@@ -3,6 +3,8 @@ cmp.setup({
   sources = {
     { name = "copilot", group_index = 2 },
     { name = 'nvim_lsp', group_index = 2 },
+    { name = 'buffer' },
+    { name = 'path' },
   },
   mapping = cmp.mapping.preset.insert({
     ['<CR>'] = cmp.mapping.confirm({ select = false }),
@@ -13,18 +15,25 @@ cmp.setup({
   }),
 })
 
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' },
+    { name = 'cmdline' },
+  }),
+})
+
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 vim.lsp.config('lua_ls', {
   capabilities = capabilities,
   settings = {
     Lua = {
       diagnostics = {
-        globals = {'vim'}, -- Recognize 'vim' as a global variable
+        globals = {'vim'},
       },
       workspace = {
-        checkThirdParty = false, -- Disable third-party checks
+        checkThirdParty = false,
       },
     },
   },
@@ -34,7 +43,6 @@ vim.lsp.config("pyright", {
   capabilities = capabilities,
   settings = {
     pyright = {
-      -- Using Ruff's import organizer
       disableOrganizeImports = true,
     },
     python = {
@@ -57,6 +65,10 @@ vim.lsp.config("ruff", {
   }
 })
 
+vim.lsp.config('ts_ls', { capabilities = capabilities })
+
+vim.lsp.enable({ 'ts_ls', 'pyright', 'ruff', 'lua_ls' })
+
 vim.opt.signcolumn = 'yes'
 
 local function safe_lsp_jump(method)
@@ -71,12 +83,11 @@ local function safe_lsp_jump(method)
         vim.notify("No locations found", vim.log.levels.INFO)
         return
       end
-      
+
       local handler = vim.lsp.handlers[method]
       if handler then
         handler(err, result, ctx, config)
       else
-        -- Fallback to default jump-to-location behavior
         if vim.islist(result) then
           vim.lsp.util.jump_to_location(result[1], 'utf-8')
         else
@@ -119,10 +130,3 @@ end, { desc = 'Show all diagnostics in quickfix' })
 vim.keymap.set('n', '<leader>dl', function()
   vim.diagnostic.setloclist({ open = true })
 end, { desc = 'Show diagnostics in loclist' })
-
-vim.lsp.config('html', { capabilities = capabilities })
-vim.lsp.config('ts_ls', { capabilities = capabilities })
-vim.lsp.config('emmet_ls', { capabilities = capabilities })
-vim.lsp.config('cssls', { capabilities = capabilities })
-
-vim.lsp.enable({ 'html', 'ts_ls', 'pyright', 'ruff', 'emmet_ls', 'cssls', 'lua_ls' })
