@@ -33,4 +33,44 @@ return {
   { "nvim-tree/nvim-web-devicons", lazy = true },
 
   { "neovim/nvim-lspconfig" },
+
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = function()
+      require('nvim-autopairs').setup({})
+      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+      local cmp = require('cmp')
+      cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+    end,
+  },
+
+  {
+    'folke/flash.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('flash').setup({})
+      vim.keymap.set({'n', 'x', 'o'}, 's', function() require('flash').jump() end)
+      vim.keymap.set({'n', 'x', 'o'}, 'S', function() require('flash').treesitter() end)
+    end,
+  },
+
+  {
+    'folke/todo-comments.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {},
+  },
+
+  {
+    'j-hui/fidget.nvim',
+    opts = {},
+  },
+
+  {
+    'stevearc/oil.nvim',
+    config = function()
+      require('oil').setup({})
+      vim.keymap.set('n', '-', '<cmd>Oil<cr>', { desc = 'Open parent directory' })
+    end,
+  },
 }

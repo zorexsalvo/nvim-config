@@ -1,6 +1,6 @@
-require("config.lazy")
-require("config.lsp")
-require("config.ruff")
+-- Core configuration modules
+require("config.lazy")  -- Plugin manager setup
+require("config.lsp")   -- LSP and completion setup
 
 -- basic options
 vim.opt.number = true
@@ -25,6 +25,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.wo.relativenumber = true
 
+-- Theme configuration
 require('catppuccin').setup({
     transparent_background = true, 
     float = {
