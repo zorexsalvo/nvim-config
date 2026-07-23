@@ -1,4 +1,17 @@
+-- Main LSP Configuration
+-- This module sets up nvim-cmp completion and LSP keybindings
+
+-- Load utilities and server configs
+local lsp_utils = require('utils.lsp')
+local lsp_servers = require('config.lsp-servers')
+
+-- ============================================================================
+-- COMPLETION SETUP (nvim-cmp)
+-- ============================================================================
+
 local cmp = require('cmp')
+
+-- Main completion setup
 cmp.setup({
   sources = {
     { name = "copilot", group_index = 2 },
@@ -15,6 +28,7 @@ cmp.setup({
   }),
 })
 
+-- Command-line completion
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
@@ -23,80 +37,27 @@ cmp.setup.cmdline(':', {
   }),
 })
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- ============================================================================
+-- LSP SERVER SETUP
+-- ============================================================================
 
-vim.lsp.config('lua_ls', {
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = {'vim'},
-      },
-      workspace = {
-        checkThirdParty = false,
-      },
-    },
-  },
-})
+local capabilities = lsp_servers.get_capabilities()
+lsp_servers.setup_servers(capabilities)
+lsp_servers.setup_ruff_autocmd()
 
-vim.lsp.config("pyright", {
-  capabilities = capabilities,
-  settings = {
-    pyright = {
-      disableOrganizeImports = true,
-    },
-    python = {
-      analysis = {
-        typeCheckingMode = "basic",
-        reportUnusedImport = false,
-        reportMissingParameterType = false,
-        reportMissingReturnType = false,
-      },
-    },
-  },
-})
-
-vim.lsp.config("ruff", {
-  capabilities = capabilities,
-  init_options = {
-    settings = {
-      args = {},
-    }
-  }
-})
-
-vim.lsp.config('ts_ls', { capabilities = capabilities })
-
+-- Enable all configured LSP servers
 vim.lsp.enable({ 'ts_ls', 'pyright', 'ruff', 'lua_ls' })
 
+-- ============================================================================
+-- UI CONFIGURATION
+-- ============================================================================
+
+-- Always show sign column to prevent layout shift
 vim.opt.signcolumn = 'yes'
 
-local function safe_lsp_jump(method)
-  return function()
-    local params = vim.lsp.util.make_position_params()
-    vim.lsp.buf_request(0, method, params, function(err, result, ctx, config)
-      if err then
-        vim.notify("LSP error: " .. tostring(err.message), vim.log.levels.ERROR)
-        return
-      end
-      if not result or vim.tbl_isempty(result) then
-        vim.notify("No locations found", vim.log.levels.INFO)
-        return
-      end
-
-      local handler = vim.lsp.handlers[method]
-      if handler then
-        handler(err, result, ctx, config)
-      else
-        if vim.islist(result) then
-          vim.lsp.util.jump_to_location(result[1], 'utf-8')
-        else
-          vim.lsp.util.jump_to_location(result, 'utf-8')
-        end
-      end
-    end)
-  end
-end
+-- ============================================================================
+-- LSP KEYBINDINGS
+-- ============================================================================
 
 vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'LSP actions',
@@ -104,13 +65,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local opts = { buffer = event.buf }
     local buf = vim.lsp.buf
 
+    -- Navigation
     vim.keymap.set('n', 'K', buf.hover, opts)
-    vim.keymap.set('n', 'gd', safe_lsp_jump('textDocument/definition'), opts)
-    vim.keymap.set('n', 'gD', safe_lsp_jump('textDocument/declaration'), opts)
-    vim.keymap.set('n', 'gi', safe_lsp_jump('textDocument/implementation'), opts)
-    vim.keymap.set('n', 'go', safe_lsp_jump('textDocument/typeDefinition'), opts)
+    vim.keymap.set('n', 'gd', lsp_utils.safe_lsp_jump('textDocument/definition'), opts)
+    vim.keymap.set('n', 'gD', lsp_utils.safe_lsp_jump('textDocument/declaration'), opts)
+    vim.keymap.set('n', 'gi', lsp_utils.safe_lsp_jump('textDocument/implementation'), opts)
+    vim.keymap.set('n', 'go', lsp_utils.safe_lsp_jump('textDocument/typeDefinition'), opts)
     vim.keymap.set('n', 'gr', buf.references, opts)
     vim.keymap.set('n', 'gs', buf.signature_help, opts)
+
+    -- Code actions
     vim.keymap.set('n', '<leader>rn', buf.rename, opts)
     vim.keymap.set('n', '<leader>ca', buf.code_action, opts)
     vim.keymap.set({ 'n', 'v' }, '<leader>f', function()
@@ -119,14 +83,21 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end
 })
 
+-- ============================================================================
+-- DIAGNOSTIC KEYBINDINGS
+-- ============================================================================
+
+-- Toggle diagnostic virtual lines
 vim.keymap.set('n', 'gK', function()
   vim.diagnostic.config({ virtual_lines = not vim.diagnostic.config().virtual_lines })
 end, { desc = 'Toggle diagnostic virtual_lines' })
 
+-- Show all diagnostics in quickfix list
 vim.keymap.set('n', '<leader>dq', function()
   vim.diagnostic.setqflist({ open = true })
 end, { desc = 'Show all diagnostics in quickfix' })
 
+-- Show diagnostics in location list
 vim.keymap.set('n', '<leader>dl', function()
   vim.diagnostic.setloclist({ open = true })
 end, { desc = 'Show diagnostics in loclist' })
