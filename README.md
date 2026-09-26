@@ -20,22 +20,15 @@ This is my personal Neovim configuration, designed for productivity and clean co
 ├── init.lua                  # Entry point, basic vim options
 ├── lua/
 │   ├── config/              # Core configuration modules
-│   │   ├── README.md        # Configuration documentation
 │   │   ├── lazy.lua         # Plugin manager setup
 │   │   ├── lsp.lua          # LSP and completion setup
 │   │   └── lsp-servers.lua  # Per-server LSP configs
 │   ├── plugins/             # Plugin specifications (lazy.nvim)
-│   │   ├── coding.lua       # Copilot, TODOs, which-key
-│   │   ├── colorscheme.lua  # Catppuccin theme
 │   │   ├── completion.lua   # nvim-cmp and sources
-│   │   ├── editor.lua       # Autopairs, surround, flash, oil
-│   │   ├── git.lua          # Fugitive, gitsigns
-│   │   ├── navigation.lua   # Telescope, harpoon
 │   │   ├── syntax.lua       # Treesitter
-│   │   └── ui.lua           # Lualine, fidget, indent guides
+│   │   └── ...              # Other plugin groups
 │   └── utils/               # Utility functions
 │       └── lsp.lua          # LSP helper functions
-└── docs/                    # Documentation
 ```
 
 ## Requirements
@@ -52,7 +45,9 @@ This is my personal Neovim configuration, designed for productivity and clean co
 
 1. Clone this repo to `~/.config/nvim`
 2. Start Neovim - lazy.nvim will auto-install on first run
-3. Install language servers (via Mason, npm, pip, etc.)
+3. Install language servers (via Mason, npm, pip, etc.); this config does not install them
+
+For a minimal Treesitter-only setup, start Neovim with `nvim -u ./init.minimal.lua`. It loads lazy.nvim and the plugin in `lua/plugins/syntax.lua`, without the full plugin list or the main `init.lua` options.
 
 ## Key Bindings
 

@@ -3,18 +3,6 @@ return {
   { 'andymass/vim-matchup', event = 'VimEnter' },
 
   -- Treesitter — scoped to languages in use
-  {
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
-    config = function()
-      require('nvim-treesitter.configs').setup({
-        ensure_installed = { 'python', 'typescript', 'javascript', 'tsx', 'lua' },
-        highlight = { enable = true },
-        indent = { enable = true },
-      })
-    end,
-  },
-
   { 'lewis6991/gitsigns.nvim' },
 
   {
@@ -31,8 +19,6 @@ return {
   },
 
   { "nvim-tree/nvim-web-devicons", lazy = true },
-
-  { "neovim/nvim-lspconfig" },
 
   {
     'windwp/nvim-autopairs',
