@@ -6,7 +6,7 @@ return {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     config = function()
-      require('nvim-autopairs').setup({})
+      require('nvim-autopairs').setup()
       local cmp_autopairs = require('nvim-autopairs.completion.cmp')
       local cmp = require('cmp')
       cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
@@ -18,7 +18,7 @@ return {
     "kylechui/nvim-surround",
     version = "*",
     config = function()
-      require("nvim-surround").setup({})
+      require("nvim-surround").setup()
     end
   },
 
@@ -27,7 +27,7 @@ return {
     'folke/flash.nvim',
     event = 'VeryLazy',
     config = function()
-      require('flash').setup({})
+      require('flash').setup()
       vim.keymap.set({'n', 'x', 'o'}, '<leader>s', function() require('flash').jump() end)
       vim.keymap.set({'n', 'x', 'o'}, '<leader>S', function() require('flash').treesitter() end)
     end,
@@ -37,7 +37,7 @@ return {
   {
     'stevearc/oil.nvim',
     config = function()
-      require('oil').setup({})
+      require('oil').setup()
       vim.keymap.set('n', '-', '<cmd>Oil<cr>', { desc = 'Open parent directory' })
     end,
   },
@@ -45,6 +45,5 @@ return {
   -- Distraction-free writing mode
   {
     "folke/zen-mode.nvim",
-    opts = {},
   },
 }
