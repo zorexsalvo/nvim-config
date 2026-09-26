@@ -5,13 +5,13 @@ This is my personal Neovim configuration, designed for productivity and clean co
 ## Features
 
 - **LSP Support** - Language servers for Python, TypeScript/JavaScript, Lua
-- **Completion** - nvim-cmp with LSP, buffer, path, and Copilot sources
+- **Completion** - nvim-cmp with LSP, buffer, and path sources
 - **Fuzzy Finding** - Telescope for files, buffers, and live grep
 - **Git Integration** - Fugitive and Gitsigns for git operations
 - **Syntax Highlighting** - Treesitter for enhanced parsing
 - **Navigation** - Harpoon for quick marks, Flash for labeled jumps
 - **UI Enhancements** - Lualine status line, indent guides, fidget notifications
-- **Code Assistance** - GitHub Copilot, TODO highlighting, which-key hints
+- **Code Assistance** - TODO highlighting, which-key hints
 
 ## Structure
 
@@ -53,7 +53,6 @@ For a minimal Treesitter-only setup, start Neovim with `nvim -u ./init.minimal.l
 
 ### General
 - `<leader>` = `<space>`
-- `<leader>mp` - Toggle markdown preview
 
 ### LSP
 - `K` - Hover documentation

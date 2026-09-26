@@ -1,13 +1,6 @@
 -- Coding assistance plugins
 -- AI completion, TODOs, keybinding hints
 return {
-  -- GitHub Copilot
-  {
-    "github/copilot.vim",
-    event = "InsertEnter",
-    cmd = "Copilot",
-  },
-
   -- Highlight TODO comments
   {
     'folke/todo-comments.nvim',

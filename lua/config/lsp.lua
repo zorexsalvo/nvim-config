@@ -14,7 +14,6 @@ local cmp = require('cmp')
 -- Main completion setup
 cmp.setup({
   sources = {
-    { name = "copilot", group_index = 2 },
     { name = 'nvim_lsp', group_index = 2 },
     { name = 'buffer' },
     { name = 'path' },
