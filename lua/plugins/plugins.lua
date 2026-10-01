@@ -2,9 +2,6 @@ return {
   -- Load on an autocommand event
   { 'andymass/vim-matchup', event = 'VimEnter' },
 
-  -- Treesitter — scoped to languages in use
-  { 'lewis6991/gitsigns.nvim' },
-
   {
     "folke/zen-mode.nvim",
     opts = {},

@@ -63,13 +63,6 @@ return {
     opts = {},
   },
 
-  -- Indent guides
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
-    opts = {},
-  },
-
   -- Markdown rendering (disabled - causes treesitter issues in nvim 0.12)
   -- {
   --   'MeanderingProgrammer/render-markdown.nvim',

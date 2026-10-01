@@ -1,7 +1,7 @@
 -- Git integration plugins
 return {
   -- Git signs in gutter
-  { 'lewis6991/gitsigns.nvim' },
+  { 'lewis6991/gitsigns.nvim', opts = {} },
 
   -- Git wrapper for Neovim
   {
