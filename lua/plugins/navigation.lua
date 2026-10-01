@@ -9,6 +9,9 @@ return {
       'nvim-lua/plenary.nvim',
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     },
+    config = function()
+      require('telescope').load_extension('fzf')
+    end,
   },
 
   -- Telescope file browser extension
@@ -35,14 +38,8 @@ return {
         end,
         { desc = 'Telescope Live Grep' }
       )
-      vim.keymap.set('n', '<leader>ps', builtin.grep_string, { desc = 'Telescope Grep String' })
-      vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = 'Default vim file browser'} )
-      vim.api.nvim_set_keymap(
-        'n',
-        '<space>fb',
-        ':Telescope file_browser path=%:p:h select_buffer=true<CR>',
-        { noremap = true }
-      )
+      vim.keymap.set('n', '<leader>e', '<cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>',
+        { desc = 'Browse files' })
     end,
   },
 
@@ -58,9 +55,4 @@ return {
       vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu, { desc = "Open harp tab" })
     end,
   },
-
-  config = function()
-    require('telescope').load_extension('fzf')
-  end,
-
 }
