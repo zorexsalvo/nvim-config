@@ -5,7 +5,10 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     branch = 'master',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    },
   },
 
   -- Telescope file browser extension
@@ -55,4 +58,9 @@ return {
       vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu, { desc = "Open harp tab" })
     end,
   },
+
+  config = function()
+    require('telescope').load_extension('fzf')
+  end,
+
 }
