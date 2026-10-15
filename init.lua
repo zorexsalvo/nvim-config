@@ -23,7 +23,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.wo.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Theme configuration
 require('catppuccin').setup({
