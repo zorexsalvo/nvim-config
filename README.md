@@ -33,7 +33,9 @@ This is my personal Neovim configuration, designed for productivity and clean co
 
 ## Requirements
 
-- Neovim >= 0.10 (tested on 0.12.2)
+- Neovim >= 0.12 (tested on 0.12.2)
+- tree-sitter CLI >= 0.26.1 (`brew install tree-sitter-cli` on macOS)
+- A C compiler, `curl`, and `tar` for parser installation
 - Git
 - A patched font for icons (e.g., Nerd Font)
 - Language servers:
@@ -98,7 +100,7 @@ For a minimal Treesitter-only setup, start Neovim with `nvim -u ./init.minimal.l
 
 If you encounter errors:
 
-1. Check Neovim version: `nvim --version` (must be >= 0.10)
+1. Check Neovim version: `nvim --version` (must be >= 0.12)
 2. Run `:checkhealth` in Neovim
 3. Ensure language servers are installed
 4. Check `lua/config/README.md` for module documentation
