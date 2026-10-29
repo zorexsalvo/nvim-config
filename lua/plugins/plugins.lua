@@ -1,6 +1,12 @@
 return {
   -- Load on an autocommand event
-  { 'andymass/vim-matchup', event = 'VimEnter' },
+  {
+    'andymass/vim-matchup',
+    event = 'VimEnter',
+    init = function()
+      vim.g.matchup_treesitter_disabled = { 'markdown' }
+    end,
+  },
 
   {
     "folke/zen-mode.nvim",

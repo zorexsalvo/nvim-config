@@ -1,6 +1,16 @@
 -- Navigation plugins
 -- File finding, project navigation
 return {
+  -- Code outline (functions, classes, methods)
+  {
+    'stevearc/aerial.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {},
+    keys = {
+      { '<leader>o', '<cmd>AerialToggle!<CR>', desc = 'Toggle code outline' },
+    },
+  },
+
   -- Telescope fuzzy finder
   {
     'nvim-telescope/telescope.nvim',

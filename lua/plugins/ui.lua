@@ -64,12 +64,12 @@ return {
   },
 
   -- Markdown rendering (disabled - causes treesitter issues in nvim 0.12)
-  -- {
-  --   'MeanderingProgrammer/render-markdown.nvim',
-  --   dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
-  --   ft = { 'markdown' },
-  --   opts = {
-  --     enabled = false,
-  --   },
-  -- },
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+    ft = { 'markdown' },
+    opts = {
+      enabled = false,
+    },
+  },
 }

@@ -9,7 +9,7 @@ This is my personal Neovim configuration, designed for productivity and clean co
 - **Fuzzy Finding** - Telescope for files, buffers, and live grep
 - **Git Integration** - Fugitive and Gitsigns for git operations
 - **Syntax Highlighting** - Treesitter for enhanced parsing
-- **Navigation** - Harpoon for quick marks, Flash for labeled jumps
+- **Navigation** - Aerial code outline, Harpoon for quick marks, Flash for labeled jumps
 - **UI Enhancements** - Lualine status line, indent guides, fidget notifications
 - **Code Assistance** - TODO highlighting, which-key hints
 
@@ -74,6 +74,7 @@ For a minimal Treesitter-only setup, start Neovim with `nvim -u ./init.minimal.l
 - `<leader>dl` - Show diagnostics in location list
 
 ### Navigation
+- `<leader>o` - Toggle code outline (Aerial)
 - `<leader>ff` - Find files (Telescope)
 - `<leader>fg` - Find git files (Telescope)
 - `<leader>fn` - Find buffers (Telescope)
