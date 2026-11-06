@@ -26,23 +26,8 @@ function M.setup_servers(capabilities)
     },
   })
 
-  -- Python LSP (Pyright)
-  vim.lsp.config("pyright", {
-    capabilities = capabilities,
-    settings = {
-      pyright = {
-        disableOrganizeImports = true,
-      },
-      python = {
-        analysis = {
-          typeCheckingMode = "basic",
-          reportUnusedImport = false,
-          reportMissingParameterType = false,
-          reportMissingReturnType = false,
-        },
-      },
-    },
-  })
+  -- Python LSP (Astral ty)
+  vim.lsp.config('ty', { capabilities = capabilities })
 
   -- Python Linter/Formatter (Ruff)
   vim.lsp.config("ruff", {
@@ -60,7 +45,7 @@ function M.setup_servers(capabilities)
   })
 end
 
---- Setup Ruff-specific behavior (disable hover in favor of Pyright)
+--- Setup Ruff-specific behavior (disable hover in favor of ty)
 function M.setup_ruff_autocmd()
   vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
@@ -70,7 +55,7 @@ function M.setup_ruff_autocmd()
         return
       end
       if client.name == 'ruff' then
-        -- Disable hover in favor of Pyright
+        -- Disable hover in favor of ty
         client.server_capabilities.hoverProvider = false
       end
     end,

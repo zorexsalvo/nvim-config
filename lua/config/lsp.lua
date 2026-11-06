@@ -45,7 +45,7 @@ lsp_servers.setup_servers(capabilities)
 lsp_servers.setup_ruff_autocmd()
 
 -- Enable all configured LSP servers
-vim.lsp.enable({ 'ts_ls', 'pyright', 'ruff', 'lua_ls' })
+vim.lsp.enable({ 'ts_ls', 'ty', 'ruff', 'lua_ls' })
 
 -- ============================================================================
 -- UI CONFIGURATION

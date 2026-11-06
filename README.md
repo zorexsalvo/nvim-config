@@ -40,7 +40,7 @@ This is my personal Neovim configuration, designed for productivity and clean co
 - A patched font for icons (e.g., Nerd Font)
 - Language servers:
   - `lua-language-server` for Lua
-  - `pyright` and `ruff` for Python
+  - `ty` and `ruff` for Python
   - `typescript-language-server` for TypeScript/JavaScript
 
 ## Installation

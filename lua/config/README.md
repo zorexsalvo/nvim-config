@@ -27,8 +27,8 @@ Main LSP configuration module. Sets up:
 ### `lsp-servers.lua`
 Per-server LSP configurations. Defines settings for:
 - **lua_ls** - Lua language server (vim globals, workspace config)
-- **pyright** - Python type checker (basic mode, disabled organize imports)
-- **ruff** - Python linter/formatter (hover disabled in favor of Pyright)
+- **ty** - Python type checker from Astral
+- **ruff** - Python linter/formatter (hover disabled in favor of ty)
 - **ts_ls** - TypeScript/JavaScript language server
 
 ## Dependencies
