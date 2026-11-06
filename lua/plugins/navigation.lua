@@ -74,13 +74,15 @@ return {
   -- Harpoon - quick file marks
   {
     'ThePrimeagen/harpoon',
-    dependencies = {'nvim-lua/plenary.nvim'},
+    branch = 'harpoon2',
+    dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
-      local mark = require("harpoon.mark")
-      local ui = require("harpoon.ui")
+      local harpoon = require('harpoon')
+      harpoon:setup()
+      local list = harpoon:list()
 
-      vim.keymap.set("n", "<leader>a", mark.add_file, { desc = "Harpoooon!" })
-      vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu, { desc = "Open harp tab" })
+      vim.keymap.set('n', '<leader>a', function() list:add() end, { desc = 'Add file to Harpoon' })
+      vim.keymap.set('n', '<C-e>', function() harpoon.ui:toggle_quick_menu(list) end, { desc = 'Open Harpoon menu' })
     end,
   },
 }
