@@ -20,6 +20,24 @@ return {
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     },
     config = function()
+      require('telescope').setup({
+        extensions = {
+          file_browser = {
+            mappings = {
+              n = {
+                ['H'] = function()
+                  vim.notify(table.concat({
+                    'File browser shortcuts (H):',
+                    '<C-g>  Parent directory',
+                    '<C-t>  Change working directory',
+                    '<C-e>  Home directory',
+                  }, '\n'))
+                end,
+              },
+            },
+          },
+        },
+      })
       require('telescope').load_extension('fzf')
     end,
   },
