@@ -17,14 +17,16 @@ function M.safe_lsp_jump(method)
         return
       end
 
+      local client = vim.lsp.get_client_by_id(ctx.client_id)
+      local position_encoding = client and client.offset_encoding or 'utf-8'
       local handler = vim.lsp.handlers[method]
       if handler then
         handler(err, result, ctx, config)
       else
         if vim.islist(result) then
-          vim.lsp.util.jump_to_location(result[1], 'utf-8')
+          vim.lsp.util.show_document(result[1], position_encoding, { focus = true })
         else
-          vim.lsp.util.jump_to_location(result, 'utf-8')
+          vim.lsp.util.show_document(result, position_encoding, { focus = true })
         end
       end
     end)
